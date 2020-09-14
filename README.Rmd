@@ -1,0 +1,135 @@
+---
+title: 'Trabalho final: Análise dos Pokemons'
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(gghighlight)
+
+pokemon <- readr::read_rds("/Users/proje/Desktop/projetosR/pokemon/data-raw/pokemon.rds")
+
+tema_pokemon <- function() {
+  theme(
+    plot.title = element_text(
+      hjust = 0.5,
+      size = 15),
+    plot.subtitle = element_text(
+      hjust = 0.5,
+      size = 10),
+    axis.text.y = element_text(size = 10),
+    #axis.text.x = element_blank(),
+    #axis.title.x = element_blank(),
+    panel.background = element_blank(),
+    panel.grid.major.y = element_line(size = 0.1),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  )
+}
+
+normalizar <- function(x) {
+
+  return ((x - min(x)) / (max(x) - min(x)))
+
+}
+
+```
+
+
+**1. Dicionário de dados**
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+glimpse(pokemon)
+
+```
+
+**2. Ajuste da base**
+
+A primeira ação será retirar da base os Pokemons que não contém
+geração. Isso, pois, essa lista se refere a casos especiais de Pokemons (personagens que apareceram em algum episódio, que fazem parte de algum mapa específico, que não tem algum tipo de poder e etc.). Dessa forma, para evitar qualquer viés ou problema com a análise, decidi retirar da base.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon <- pokemon %>%
+  filter(!is.na(id_geracao))
+
+```
+
+
+**3. Iniciando as análises**
+
+A jornada Pokemon da Curso-R com dados se iniciará com um objetivo principal: encontrar os personagens com melhores atributos, tendo como referência os tipos e seus principais nomes. Dessa forma, a análise se estruturou da seguinte maneira: primeiramente, buscando a distribuição dos pokemons, por tipo e por atributo; após isso, observar como cada agrupamento apresenta seus desempenhos; e, por fim, capturando os principais nomes das respectivas relações. Sendo assim, completando o objetivo da jornad, pois, como todo desafio trata de encarar diversos estádios e cidades, cada um com sua especialidade, buscaremos explorar os melhores pokemons de acordo com suas variedades.
+
+
+**4. Distribuição da quantidade de pokemons por tipo**
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(
+    tipos == "tipo_1"
+  ) %>%
+  group_by(
+    categoria,
+    id_geracao
+  ) %>%
+  count(
+    name = "quantidade"
+  ) %>%
+  ungroup() %>%
+  mutate(categoria = forcats::fct_reorder(categoria,
+                                          desc(categoria))
+  ) %>%
+  ggplot(
+    aes(x = quantidade,
+        y = categoria,
+        fill = id_geracao)
+  ) +
+  geom_col() +
+  scale_fill_continuous(low = "gray", high = "black") +
+  scale_x_continuous(breaks = seq(0, 200, 10)) +
+  labs(
+    x = "Quantidade",
+    y = "Tipo",
+    title = "Quantidade de Pokemons",
+    subtitle = "Contagem sobre da principal categoria das espécies",
+    fill = "Geração"
+  ) +
+  tema_pokemon()
+
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = c("ataque",
+             "defesa",
+             "velocidade"),
+    names_to = "caracteristica",
+    values_to = "valor"
+  ) %>%
+  filter(!is.na(valor)) %>%
+  ggplot(aes(valor, fill = caracteristica)) +
+  geom_density(col = "white",
+               alpha = .5) +
+  scale_x_continuous(breaks = seq(0, 200, 50)) +
+  labs(
+    x = "Quantidade",
+    y = "Densidade",
+    title = "Atributos dos Pokemons",
+    subtitle = "Densidade dos principais itens para cada espécie",
+    fill = "Atributo"
+  ) +
+  tema_pokemon()
+
+```
