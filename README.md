@@ -6,8 +6,29 @@ Trabalho final: Análise dos Pokemons
 Para entender os dados mais específicos, é importante verificar a
 situação da base. Dessa forma,
 
-pokemon = nome dos pokemon exp\_base = experiência inicial do pokemon hp
-= saúde/vida do pokemon tipo = categoria do pokemon
+<li>
+
+pokemon = nome dos pokemon
+
+</li>
+
+<li>
+
+exp\_base = experiência inicial do pokemon
+
+</li>
+
+<li>
+
+hp = saúde/vida do pokemon
+
+</li>
+
+<li>
+
+tipo = categoria do pokemon
+
+</li>
 
     ## Rows: 949
     ## Columns: 20
@@ -99,5 +120,22 @@ alguns tipos acabam ficando com pouca presença de pokemons.
 | voador    | NA | NA | NA | NA |  1 |  2 | NA |
 
 Tabela 1. Distribuição dos pokemons por tipo ao longo das gerações
+
+**5. Densidade dos principais atributos Pokemon**
+
+Observar a densidade dos atributos de força dos pokemons ajuda a
+entender se há alguma variação para esses itens ao longo das gerações.
+Aqui, duas percepções são importantes. Primeiramente, não há valorização
+para determinado atributo, em nenhuma geração, isso é importante para
+entender que os Pokemons seguem em mesmo nível; o segundo ponto é que,
+
+Essa separação serve para demonstrar como há uma certa concentração para
+algumas categorias. A distribuição por gerações permite entender se
+houve alguma variação ao longo da história Pokemon. Entretanto, é
+possível perceber que, dentre as **18 categorias**, há uma prevalência
+de características específicas. No caso, destaco: **água**, **grama** e
+**inseto**. Além dessas, também há uma forte presença de pokemons do
+tipo **normal**, que trata de uma forma mais genérica de pokemons
+(envolvendo roedores, aves e etc.)
 
 <img src="README_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />

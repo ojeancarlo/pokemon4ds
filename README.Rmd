@@ -43,10 +43,10 @@ normalizar <- function(x) {
 
 Para entender os dados mais específicos, é importante verificar a situação da base. Dessa forma, 
 
-pokemon = nome dos pokemon
-exp_base = experiência inicial do pokemon
-hp = saúde/vida do pokemon
-tipo = categoria do pokemon
+<li>pokemon = nome dos pokemon</li>
+<li>exp_base = experiência inicial do pokemon</li>
+<li>hp = saúde/vida do pokemon</li>
+<li>tipo = categoria do pokemon</li>
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
@@ -148,7 +148,11 @@ pokemon %>%
 
 ```
 
+**5. Densidade dos principais atributos Pokemon**
 
+Observar a densidade dos atributos de força dos pokemons ajuda a entender se há alguma variação para esses itens ao longo das gerações. Aqui, duas percepções são importantes. Primeiramente, não há valorização para determinado atributo, em nenhuma geração, isso é importante para entender que os Pokemons seguem em mesmo nível; o segundo ponto é que, 
+
+Essa separação serve para demonstrar como há uma certa concentração para algumas categorias. A distribuição por gerações permite entender se houve alguma variação ao longo da história Pokemon. Entretanto, é possível perceber que, dentre as **18 categorias**, há uma prevalência de características específicas. No caso, destaco: **água**, **grama** e **inseto**. Além dessas, também há uma forte presença de pokemons do tipo **normal**, que trata de uma forma mais genérica de pokemons (envolvendo roedores, aves e etc.)
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
