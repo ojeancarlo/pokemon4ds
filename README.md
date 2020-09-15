@@ -209,3 +209,38 @@ ataque especial e **Hitmonchan**, com grande potência para defesa
 especial. Todos esses também contam com um poder ofensivo maior que 100.
 
 <img src="README_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
+**9. Observações adicionais**
+
+A fim de dar extensão para as análises, cabe investigar algumas
+pontuações gerais sobre os Pokemons. Para isso, cabe responder mais
+algumas questões
+
+**Há relação entre o rating dos Pokemons e sua estrutura física?**
+
+A primeira referência em relação aos atributos de ataque e defesa não
+apontam pra uma interferência das características físicas. Pokemons
+**grandes** e **pesados** não aparecem em um bloco privilegiado de
+atributos. Esses itens não garante acréscimo de poderes para os mesmos.
+
+<img src="README_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+**Há relação entre a experiência e os atributos do Pokemon?**
+
+Como dito no início da análise, a referência de experiência parece
+influenciar as bases dos atributos de poder e força. No caso, pode-se
+perceber que, mesmo que levemente, quanto mais experiência de base, mais
+forte o Pokemon será em seu respectivo atributo.
+
+<img src="README_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+
+**10. Observações finais**
+
+Com essas observações, encerro a análise sobre a base dos Pokemons. Foi
+possível, aqui, realizar uma escolha orientada de cada um dos tipos e
+espécies, definindo os melhores atributos dentro das suas
+possibilidades. Da mesma maneira, também foi possível perceber algumas
+influências que podem afetar o poder dos Pokemons - seja por geração,
+por experiência ou por característica física. Sendo assim, mesmo que de
+forma introdutória, conseguimos iniciar uma jornada Pokemon orientada a
+dados.

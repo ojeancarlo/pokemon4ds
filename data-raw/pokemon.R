@@ -276,3 +276,106 @@ pokemon %>%
               label_params = list(size = 5, color = "#C03028")) +
   geom_point(col = "#C03028") +
   tema_pokemon()
+
+
+##Há relação entre o rating dos Pokemons e sua estrutura física?
+#Por peso
+pokemon %>%
+  mutate(
+    peso_categoria = case_when(
+      peso < mean(peso) ~ "leve",
+      peso >= mean(peso) ~ "pesado")
+  ) %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque,
+             y = defesa,
+             alpha = peso,
+             size = peso,
+             color = peso_categoria)) +
+  scale_color_manual(values = c("lightskyblue","mediumorchid4")) +
+  geom_point() +
+  #facet_wrap(vars(peso_categoria)) +
+  tema_pokemon() +
+  labs(
+    y = "Defesa",
+    x = "Ataque",
+    size = "Peso",
+    alpha = "Peso",
+    color = "Categoria do Peso",
+    title = "Características dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e o peso"
+  ) +
+  tema_pokemon()
+
+
+#Por altura
+pokemon %>%
+  mutate(
+    altura_categoria = case_when(
+      altura < mean(altura) ~ "pequeno",
+      altura >= mean(altura) ~ "grande")
+  ) %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque,
+             y = defesa,
+             alpha = altura,
+             size = altura,
+             color = altura_categoria)) +
+  scale_color_manual(values = c("mediumorchid4","lightskyblue")) +
+  geom_point() +
+  #facet_wrap(vars(peso_categoria)) +
+  tema_pokemon() +
+  labs(
+    y = "Defesa",
+    x = "Ataque",
+    size = "Altura",
+    alpha = "Altura",
+    color = "Categoria da Altura",
+    title = "Características dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e a altura"
+  ) +
+  tema_pokemon()
+
+
+#Experiência e força
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  pivot_longer(
+    cols = c("ataque",
+             "defesa",
+             "velocidade"),
+    names_to = "caracteristica",
+    values_to = "valor"
+  ) %>%
+  filter(tipos %in% "tipo_1") %>%
+  ggplot() +
+  geom_point(aes(y = valor,
+                 x = exp_base,
+                 color = caracteristica)) +
+  facet_wrap(vars(caracteristica)) +
+  tema_pokemon() +
+  labs(
+    x = "Experiência",
+    y = "Força do atributo",
+    size = "Altura",
+    alpha = "Altura",
+    color = "Atributo",
+    title = "Experiência dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e a experiência"
+  ) +
+  tema_pokemon()
+

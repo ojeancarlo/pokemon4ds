@@ -7,7 +7,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
-library(gganimate)
 library(gghighlight)
 
 pokemon <- readr::read_rds("/Users/proje/Desktop/projetosR/pokemon/data-raw/pokemon.rds")
@@ -28,12 +27,6 @@ tema_pokemon <- function() {
     panel.grid.minor = element_blank(),
     panel.grid.major.x = element_blank()
   )
-}
-
-normalizar <- function(x) {
-
-  return ((x - min(x)) / (max(x) - min(x)))
-
 }
 
 ```
@@ -376,3 +369,123 @@ pokemon %>%
   geom_point(col = "#C03028") +
   tema_pokemon()
 ```
+
+**9. Observações adicionais**
+
+A fim de dar extensão para as análises, cabe investigar algumas pontuações gerais sobre os Pokemons. Para isso, cabe responder mais algumas questões
+
+**Há relação entre o rating dos Pokemons e sua estrutura física?**
+
+A primeira referência em relação aos atributos de ataque e defesa não apontam pra uma interferência das características físicas. Pokemons **grandes** e **pesados** não aparecem em um bloco privilegiado de atributos. Esses itens não garante acréscimo de poderes para os mesmos.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  mutate(
+    peso_categoria = case_when(
+      peso < mean(peso) ~ "leve",
+      peso >= mean(peso) ~ "pesado")
+  ) %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque_especial,
+             y = defesa_especial,
+             #alpha = peso,
+             size = peso,
+             color = peso_categoria)) +
+  scale_color_manual(values = c("lightskyblue","mediumorchid4")) +
+  geom_point() +
+  #facet_wrap(vars(peso_categoria)) +
+  tema_pokemon() +
+  labs(
+    y = "Defesa especial",
+    x = "Ataque especial",
+    size = "Peso",
+    alpha = "Peso",
+    color = "Categoria do Peso",
+    title = "Características dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e o peso"
+    ) +
+  tema_pokemon()
+```
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  mutate(
+    altura_categoria = case_when(
+      altura < mean(altura) ~ "pequeno",
+      altura >= mean(altura) ~ "grande")
+  ) %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque_especial,
+             y = defesa_especial,
+             #alpha = altura,
+             size = altura,
+             color = altura_categoria)) +
+  scale_color_manual(values = c("mediumorchid4","lightskyblue")) + 
+  geom_point() +
+  #facet_wrap(vars(peso_categoria)) +
+  tema_pokemon() +
+  labs(
+    y = "Defesa especial",
+    x = "Ataque especial",
+    size = "Altura",
+    alpha = "Altura",
+    color = "Categoria da Altura",
+    title = "Características dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e a altura"
+    ) +
+  tema_pokemon()
+```
+**Há relação entre a experiência e os atributos do Pokemon?**
+
+Como dito no início da análise, a referência de experiência parece influenciar as bases dos atributos de poder e força. No caso, pode-se perceber que, mesmo que levemente, quanto mais experiência de base, mais forte o Pokemon será em seu respectivo atributo. 
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  pivot_longer(
+    cols = c("ataque",
+             "defesa",
+             "velocidade"),
+    names_to = "caracteristica",
+    values_to = "valor"
+  ) %>%
+  filter(tipos %in% "tipo_1") %>%
+  ggplot() +
+  geom_point(aes(y = valor,
+                 x = exp_base,
+                 color = caracteristica)) +
+  facet_wrap(vars(caracteristica)) +
+  tema_pokemon() +
+  labs(
+    x = "Experiência",
+    y = "Força do atributo",
+    size = "Altura",
+    alpha = "Altura",
+    color = "Atributo",
+    title = "Experiência dos Pokemons",
+    subtitle = "Distribuição de acordo com os atributos e a experiência"
+  ) +
+  tema_pokemon()
+```
+
+
+**10. Observações finais**
+
+Com essas observações, encerro a análise sobre a base dos Pokemons. Foi possível, aqui, realizar uma escolha orientada de cada um dos tipos e espécies, definindo os melhores atributos dentro das suas possibilidades. Da mesma maneira, também foi possível perceber algumas influências que podem afetar o poder dos Pokemons - seja por geração, por experiência ou por característica física. Sendo assim, mesmo que de forma introdutória, conseguimos iniciar uma jornada Pokemon orientada a dados.
+
