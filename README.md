@@ -4,7 +4,9 @@ Trabalho final: Análise dos Pokemons
 **1. Dicionário de dados**
 
 Para entender os dados mais específicos, é importante verificar a
-situação da base. Dessa forma,
+situação da base. Dessa forma, cabe pontuar alguns detalhes da base.
+
+<ul>
 
 <li>
 
@@ -29,6 +31,13 @@ hp = saúde/vida do pokemon
 tipo = categoria do pokemon
 
 </li>
+
+</ul>
+
+Outras variáveis estão diretamente relacionadas aos atributos dos
+pokemons. Tanto para a força de atributos (como ataque, defesa, poderes
+especiais), quanto das características dos respectivos pokemons (cor,
+altura, peso e etc.).
 
     ## Rows: 949
     ## Columns: 20
@@ -125,17 +134,23 @@ Tabela 1. Distribuição dos pokemons por tipo ao longo das gerações
 
 Observar a densidade dos atributos de força dos pokemons ajuda a
 entender se há alguma variação para esses itens ao longo das gerações.
-Aqui, duas percepções são importantes. Primeiramente, não há valorização
-para determinado atributo, em nenhuma geração, isso é importante para
-entender que os Pokemons seguem em mesmo nível; o segundo ponto é que,
-
-Essa separação serve para demonstrar como há uma certa concentração para
-algumas categorias. A distribuição por gerações permite entender se
-houve alguma variação ao longo da história Pokemon. Entretanto, é
-possível perceber que, dentre as **18 categorias**, há uma prevalência
-de características específicas. No caso, destaco: **água**, **grama** e
-**inseto**. Além dessas, também há uma forte presença de pokemons do
-tipo **normal**, que trata de uma forma mais genérica de pokemons
-(envolvendo roedores, aves e etc.)
+Aqui, há uma percepção importante. A valorização para determinado
+atributo é pequena ao longo das gerações, isso é importante para
+entender que os Pokemons seguem em mesmo nível ao longo das temporadas.
+Dessa maneira, não será necessário realizar nenhum recorte para comparar
+toda a base de pokemons.
 
 <img src="README_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+
+**6. Alcance dos tipos de Pokemon para cada atributo**
+
+Dessa maneira, para tentar compreender quais são os tipos mais potentes
+para cada atributo, é possível observar a distribuição dos respectivos
+pokemons em relação ao seu desempenho em ataque, defesa e velocidade.
+Para seguir analisando tais características, utilizarei os tipos com
+maior média em cada atributo entre todos observados. Sendo assim: o tipo
+**lutador** para encontrar pokemons de **ataque**; para o atributo de
+**defesa**, pokemons do tipo **aço**; e, por fim, o **voador** para
+**velocidade**.
+
+<img src="README_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
