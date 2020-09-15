@@ -41,16 +41,25 @@ normalizar <- function(x) {
 
 **1. Dicionário de dados**
 
+Para entender os dados mais específicos, é importante verificar a situação da base. Dessa forma, 
+
+pokemon = nome dos pokemon
+exp_base = experiência inicial do pokemon
+hp = saúde/vida do pokemon
+tipo = categoria do pokemon
+
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
 glimpse(pokemon)
 
 ```
 
-**2. Ajuste da base**
+**2. Ajustes da base**
 
 A primeira ação será retirar da base os Pokemons que não contém
 geração. Isso, pois, essa lista se refere a casos especiais de Pokemons (personagens que apareceram em algum episódio, que fazem parte de algum mapa específico, que não tem algum tipo de poder e etc.). Dessa forma, para evitar qualquer viés ou problema com a análise, decidi retirar da base.
+
+Outra referência importante para entender a análise é que os tipos escolhidos são todos relacioandos ao tipo_1. Isso, pois, considero que essa é a principal categoria do Pokemon. De modo que o tipo_2, que é utilizado apenas em uma parte da análise, é uma referência extra, de maior detalhamento. Por isso, o tipo_1 será tratado como categoria principal.
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
@@ -66,6 +75,8 @@ A jornada Pokemon da Curso-R com dados se iniciará com um objetivo principal: e
 
 
 **4. Distribuição da quantidade de pokemons por tipo**
+
+Essa separação serve para demonstrar como há uma certa concentração para algumas categorias. A distribuição por gerações permite entender se houve alguma variação ao longo da história Pokemon. Entretanto, é possível perceber que, dentre as **18 categorias**, há uma prevalência de características específicas. No caso, destaco: **água**, **grama** e **inseto**. Além dessas, também há uma forte presença de pokemons do tipo **normal**, que trata de uma forma mais genérica de pokemons (envolvendo roedores, aves e etc.)
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
@@ -107,6 +118,37 @@ pokemon %>%
   tema_pokemon()
 
 ```
+A tabela permite observar, de forma descritiva, o comportamento citado acima. Uma presença forte de determinados tipos e, por outro lado, alguns tipos acabam ficando com pouca presença de pokemons.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(
+    tipos == "tipo_1"
+  ) %>%
+  group_by(
+    categoria,
+    id_geracao
+  ) %>%
+  count(
+    name = "quantidade"
+  ) %>%
+  pivot_wider(
+    names_from = "id_geracao",
+    values_from = "quantidade"
+  ) %>%
+  relocate("categoria","1") %>%
+  ungroup() %>% 
+  knitr::kable(caption = "Tabela 1. Distribuição dos pokemons por tipo ao longo das gerações")
+
+```
+
+
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
 
@@ -123,13 +165,19 @@ pokemon %>%
   geom_density(col = "white",
                alpha = .5) +
   scale_x_continuous(breaks = seq(0, 200, 50)) +
+  facet_grid(vars(id_geracao)) +
   labs(
-    x = "Quantidade",
-    y = "Densidade",
+    x = "Quantidade de Pokemons",
     title = "Atributos dos Pokemons",
     subtitle = "Densidade dos principais itens para cada espécie",
     fill = "Atributo"
   ) +
-  tema_pokemon()
+  tema_pokemon() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+
 
 ```

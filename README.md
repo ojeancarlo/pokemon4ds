@@ -3,6 +3,12 @@ Trabalho final: Análise dos Pokemons
 
 **1. Dicionário de dados**
 
+Para entender os dados mais específicos, é importante verificar a
+situação da base. Dessa forma,
+
+pokemon = nome dos pokemon exp\_base = experiência inicial do pokemon hp
+= saúde/vida do pokemon tipo = categoria do pokemon
+
     ## Rows: 949
     ## Columns: 20
     ## $ id              <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ...
@@ -26,7 +32,7 @@ Trabalho final: Análise dos Pokemons
     ## $ url_imagem      <chr> "https://raw.githubusercontent.com/phalt/pokeapi/ma...
     ## $ url_icone       <chr> "//cdn.bulbagarden.net/upload/e/ec/001MS.png", "//c...
 
-**2. Ajuste da base**
+**2. Ajustes da base**
 
 A primeira ação será retirar da base os Pokemons que não contém geração.
 Isso, pois, essa lista se refere a casos especiais de Pokemons
@@ -34,6 +40,13 @@ Isso, pois, essa lista se refere a casos especiais de Pokemons
 mapa específico, que não tem algum tipo de poder e etc.). Dessa forma,
 para evitar qualquer viés ou problema com a análise, decidi retirar da
 base.
+
+Outra referência importante para entender a análise é que os tipos
+escolhidos são todos relacioandos ao tipo\_1. Isso, pois, considero que
+essa é a principal categoria do Pokemon. De modo que o tipo\_2, que é
+utilizado apenas em uma parte da análise, é uma referência extra, de
+maior detalhamento. Por isso, o tipo\_1 será tratado como categoria
+principal.
 
 **3. Iniciando as análises**
 
@@ -50,6 +63,41 @@ os melhores pokemons de acordo com suas variedades.
 
 **4. Distribuição da quantidade de pokemons por tipo**
 
-<img src="README_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+Essa separação serve para demonstrar como há uma certa concentração para
+algumas categorias. A distribuição por gerações permite entender se
+houve alguma variação ao longo da história Pokemon. Entretanto, é
+possível perceber que, dentre as **18 categorias**, há uma prevalência
+de características específicas. No caso, destaco: **água**, **grama** e
+**inseto**. Além dessas, também há uma forte presença de pokemons do
+tipo **normal**, que trata de uma forma mais genérica de pokemons
+(envolvendo roedores, aves e etc.)
 
-<img src="README_files/figure-gfm/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="README_files/figure-gfm/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+A tabela permite observar, de forma descritiva, o comportamento citado
+acima. Uma presença forte de determinados tipos e, por outro lado,
+alguns tipos acabam ficando com pouca presença de pokemons.
+
+| categoria |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+| :-------- | -: | -: | -: | -: | -: | -: | -: |
+| aço       | NA |  2 |  9 |  3 |  4 |  4 |  2 |
+| água      | 28 | 18 | 24 | 13 | 17 |  5 |  9 |
+| dragão    |  3 | NA |  7 |  3 |  7 |  4 |  3 |
+| elétrico  |  9 |  6 |  4 |  7 |  7 |  3 |  3 |
+| fada      |  2 |  5 | NA |  1 | NA |  9 |  1 |
+| fantasma  |  3 |  1 |  4 |  6 |  5 |  4 |  4 |
+| fogo      | 12 |  8 |  6 |  5 |  8 |  8 |  5 |
+| gelo      |  2 |  4 |  6 |  3 |  6 |  2 | NA |
+| grama     | 12 |  9 | 12 | 13 | 15 |  5 | 12 |
+| inseto    | 12 | 10 | 12 |  8 | 18 |  3 |  9 |
+| lutador   |  7 |  2 |  4 |  2 |  7 |  3 |  4 |
+| normal    | 22 | 15 | 18 | 17 | 17 |  4 | 12 |
+| pedra     |  9 |  4 |  8 |  6 |  6 |  8 |  4 |
+| psíquico  |  8 |  7 |  8 |  7 | 14 |  3 |  6 |
+| sombrio   | NA |  5 |  4 |  3 | 13 |  3 |  1 |
+| terrestre |  8 |  3 |  6 |  4 |  9 | NA |  2 |
+| venenoso  | 14 |  1 |  3 |  6 |  2 |  2 |  4 |
+| voador    | NA | NA | NA | NA |  1 |  2 | NA |
+
+Tabela 1. Distribuição dos pokemons por tipo ao longo das gerações
+
+<img src="README_files/figure-gfm/unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
