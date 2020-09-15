@@ -75,7 +75,7 @@ pokemon <- pokemon %>%
 
 **3. Iniciando as análises**
 
-A jornada Pokemon da Curso-R com dados se iniciará com um objetivo principal: encontrar os personagens com melhores atributos, tendo como referência os tipos e seus principais nomes. Dessa forma, a análise se estruturou da seguinte maneira: primeiramente, buscando a distribuição dos pokemons, por tipo e por atributo; após isso, observar como cada agrupamento apresenta seus desempenhos; e, por fim, capturando os principais nomes das respectivas relações. Sendo assim, completando o objetivo da jornad, pois, como todo desafio trata de encarar diversos estádios e cidades, cada um com sua especialidade, buscaremos explorar os melhores pokemons de acordo com suas variedades.
+A jornada Pokemon da Curso-R com dados se iniciará com um objetivo principal: encontrar os personagens com orientação baseada nos dados. Sendo assim, buscando os melhores atributos, tendo como referência os tipos e seus principais nomes. Dessa forma, a análise se estruturou da seguinte maneira: primeiramente, buscando a distribuição dos pokemons, por tipo e por atributo; após isso, observar como cada agrupamento apresenta seus desempenhos; e, por fim, capturando os principais nomes das respectivas relações. Sendo assim, completando o objetivo da jornad, pois, como todo desafio trata de encarar diversos estádios e cidades, cada um com sua especialidade, buscaremos explorar os melhores pokemons de acordo com suas variedades.
 
 
 **4. Distribuição da quantidade de pokemons por tipo**
@@ -235,3 +235,144 @@ pokemon %>%
 
 ```
 
+**7. Há alguma correlação entre as variáveis de força?**
+
+Uma forma interessante para observar se existe alguma variável que influencia em outra é testando a correlação entre os pares. Dessa forma, desenvolver a matriz é importante para definir quais variáveis serão levadas adiante na verificação mais ampla de cada atributo. Entretanto, como pode-se observar, não há relação forte entre as referências de poder (ataque, defesa e velocidade). 
+
+A variável que aponta maios correlação é sempre a de Experiência. Entretanto, isso já era esperado, já que quanto mais experiência de base, representa que o Pokemon é mais evoluído. Isso, sem dúvidas, é uma influência para que os atributos cresçam. Porém, não seria interessante inserir tal dado para buscar o Pokemon.
+
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+#Organiza a tabela para montar a correlação
+cor_pokemon <- pokemon %>%
+  select(
+    where(is.numeric) & !starts_with("id") & !contains("especial")
+  )
+
+#Cria a correlação
+cor_pokemon <- round(cor(cor_pokemon), 2)
+
+#Plota a correlação entre as variáveis numéricas
+corrplot::corrplot(cor_pokemon,
+                   method = "color",
+                   type = "lower",
+                   addCoef.col = "black",
+                   tl.col = "black",
+                   tl.srt = 40)
+
+```
+
+**8. Investigando os atributos**
+
+Como não houve nenhuma referência de correlação significativa no item 7, a sequência da investigação se deu para os ataques especiais. A análise ficou focada na distribuição de todos os pokemons, com enfoque nas referências citadas no item 6.
+
+**8.1. Atributo velocidade**
+
+Neste caso, o tipo **voador** foi utilizado para a definição dos pokemons de **velocidade**. Este é um caso específico, pois existem somente três pokemons do tipo principal voador. As referências são: **Noibat**, **Noivern** e **Tornadus-Incarnate**. O último consegue ser o mais potente deles, tendo maior alcance de poderes especiais.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque_especial,
+             y = defesa_especial,
+             size = velocidade,
+             color = categoria)) +
+  geom_point() +
+  labs(
+    y = "Defesa especial",
+    x = "Ataque especial",
+    title = "Pokemons velozes",
+    subtitle = "Distribuição de acordo com o tipo",
+    color = "Tipo",
+    size = "Velocidade"
+  ) +
+  scale_x_continuous(breaks = seq(0, 200, 10)) +
+  scale_y_continuous(breaks = seq(0, 200, 10)) +
+  gghighlight(label_key = pokemon,
+              categoria == "voador",
+              unhighlighted_params = list(color = "gray87"),
+              label_params = list(size = 5, color = "slateblue3")) +
+  geom_point(col = "slateblue3") +
+  tema_pokemon()
+```
+
+**8.2. Atributo defesa**
+
+Neste caso, para a **defesa**, a escolha foi o tipo **aço**. Para esses, há uma porção de Pokemons disponíveis para escolha. As principais referências são: **Dialga**, pokemon com alta força de ataque especial e **Aegislash-Shield**, com forte potência para defesa especial. Todos eles, com um poder defensivo maior que 100. 
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque_especial,
+             y = defesa_especial,
+             size = defesa,
+             color = categoria)) +
+  geom_point() +
+  labs(
+    y = "Defesa especial",
+    x = "Ataque especial",
+    title = "Pokemons defensivos",
+    subtitle = "Distribuição de acordo com o tipo",
+    color = "Tipo",
+    size = "Defesa"
+  ) +
+  scale_x_continuous(breaks = seq(0, 300, 10)) +
+  scale_y_continuous(breaks = seq(0, 300, 10)) +
+  gghighlight(defesa > 100,
+              label_key = pokemon,
+              categoria == "aço",
+              unhighlighted_params = list(color = "gray87"),
+              label_params = list(size = 5, color = "black")) +
+  geom_point(col = "black") +
+  tema_pokemon()
+```
+
+**8.3. Atributo ataque**
+
+Para o **ataque**, os pokemons de tipo **lutador** são os escolhidos. Assim como os defensivos, o número de Pokemons disponíveis é grande. As principais referências são: **Lucario**, pokemon com alta força de ataque especial e **Hitmonchan**, com grande potência para defesa especial. Todos esses também contam com um poder ofensivo maior que 100. 
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, fig.align = "center"}
+
+pokemon %>%
+  pivot_longer(
+    cols = starts_with("tipo"),
+    names_to = "tipos",
+    values_to = "categoria"
+  ) %>%
+  filter(tipos == "tipo_1") %>%
+  ggplot(aes(x = ataque_especial,
+             y = defesa_especial,
+             size = ataque,
+             color = categoria)) +
+  geom_point() +
+  labs(
+    y = "Defesa especial",
+    x = "Ataque especial",
+    title = "Pokemons ofensivos",
+    subtitle = "Distribuição de acordo com o tipo",
+    color = "Tipo",
+    size = "Ataque"
+  ) +
+  scale_x_continuous(breaks = seq(0, 200, 10)) +
+  scale_y_continuous(breaks = seq(0, 220, 10)) +
+  gghighlight(ataque > 100,
+              categoria == "lutador",
+              label_key = pokemon,
+              unhighlighted_params = list(color = "gray87"),
+              label_params = list(size = 5, color = "#C03028")) +
+  geom_point(col = "#C03028") +
+  tema_pokemon()
+```

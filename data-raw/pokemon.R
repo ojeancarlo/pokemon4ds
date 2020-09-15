@@ -113,15 +113,19 @@ pokemon %>%
   geom_density(col = "white",
                alpha = .5) +
   scale_x_continuous(breaks = seq(0, 200, 50)) +
-  #facet_wrap(vars(id_geracao)) +
+  facet_grid(vars(id_geracao)) +
   labs(
-    x = "Quantidade",
-    y = "Densidade",
+    x = "Distribuição",
     title = "Atributos dos Pokemons",
-    subtitle = "Densidade dos principais itens para cada espécie",
+    subtitle = "Densidade dos principais itens para cada espécie por geração",
     fill = "Atributo"
   ) +
-  tema_pokemon()
+  tema_pokemon() +
+  theme(
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
 
 #Observando os principais tipos para cada um dos atributos
 pokemon %>%
@@ -165,7 +169,7 @@ pokemon %>%
 #Organiza a tabela para montar a correlação
 cor_pokemon <- pokemon %>%
   select(
-    where(is.numeric) & !starts_with("id")
+    where(is.numeric) & !starts_with("id") & !contains("especial")
   )
 
 #Cria a correlação
@@ -208,6 +212,8 @@ pokemon %>%
               label_params = list(size = 5, color = "#A890F0")) +
   geom_point(col = "#A890F0") +
   tema_pokemon()
+
+
 
 #Lista de Pokemons de pelo atributo defesa
 pokemon %>%

@@ -81,15 +81,16 @@ principal.
 **3. Iniciando as análises**
 
 A jornada Pokemon da Curso-R com dados se iniciará com um objetivo
-principal: encontrar os personagens com melhores atributos, tendo como
-referência os tipos e seus principais nomes. Dessa forma, a análise se
-estruturou da seguinte maneira: primeiramente, buscando a distribuição
-dos pokemons, por tipo e por atributo; após isso, observar como cada
-agrupamento apresenta seus desempenhos; e, por fim, capturando os
-principais nomes das respectivas relações. Sendo assim, completando o
-objetivo da jornad, pois, como todo desafio trata de encarar diversos
-estádios e cidades, cada um com sua especialidade, buscaremos explorar
-os melhores pokemons de acordo com suas variedades.
+principal: encontrar os personagens com orientação baseada nos dados.
+Sendo assim, buscando os melhores atributos, tendo como referência os
+tipos e seus principais nomes. Dessa forma, a análise se estruturou da
+seguinte maneira: primeiramente, buscando a distribuição dos pokemons,
+por tipo e por atributo; após isso, observar como cada agrupamento
+apresenta seus desempenhos; e, por fim, capturando os principais nomes
+das respectivas relações. Sendo assim, completando o objetivo da jornad,
+pois, como todo desafio trata de encarar diversos estádios e cidades,
+cada um com sua especialidade, buscaremos explorar os melhores pokemons
+de acordo com suas variedades.
 
 **4. Distribuição da quantidade de pokemons por tipo**
 
@@ -154,3 +155,57 @@ maior média em cada atributo entre todos observados. Sendo assim: o tipo
 **velocidade**.
 
 <img src="README_files/figure-gfm/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+**7. Há alguma correlação entre as variáveis de força?**
+
+Uma forma interessante para observar se existe alguma variável que
+influencia em outra é testando a correlação entre os pares. Dessa forma,
+desenvolver a matriz é importante para definir quais variáveis serão
+levadas adiante na verificação mais ampla de cada atributo. Entretanto,
+como pode-se observar, não há relação forte entre as referências de
+poder (ataque, defesa e velocidade).
+
+A variável que aponta maios correlação é sempre a de Experiência.
+Entretanto, isso já era esperado, já que quanto mais experiência de
+base, representa que o Pokemon é mais evoluído. Isso, sem dúvidas, é uma
+influência para que os atributos cresçam. Porém, não seria interessante
+inserir tal dado para buscar o Pokemon.
+
+<img src="README_files/figure-gfm/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+
+**8. Investigando os atributos**
+
+Como não houve nenhuma referência de correlação significativa no item 7,
+a sequência da investigação se deu para os ataques especiais. A análise
+ficou focada na distribuição de todos os pokemons, com enfoque nas
+referências citadas no item 6.
+
+**8.1. Atributo velocidade**
+
+Neste caso, o tipo **voador** foi utilizado para a definição dos
+pokemons de **velocidade**. Este é um caso específico, pois existem
+somente três pokemons do tipo principal voador. As referências são:
+**Noibat**, **Noivern** e **Tornadus-Incarnate**. O último consegue ser
+o mais potente deles, tendo maior alcance de poderes especiais.
+
+<img src="README_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+
+**8.2. Atributo defesa**
+
+Neste caso, para a **defesa**, a escolha foi o tipo **aço**. Para esses,
+há uma porção de Pokemons disponíveis para escolha. As principais
+referências são: **Dialga**, pokemon com alta força de ataque especial
+e **Aegislash-Shield**, com forte potência para defesa especial. Todos
+eles, com um poder defensivo maior que 100.
+
+<img src="README_files/figure-gfm/unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+**8.3. Atributo ataque**
+
+Para o **ataque**, os pokemons de tipo **lutador** são os escolhidos.
+Assim como os defensivos, o número de Pokemons disponíveis é grande. As
+principais referências são: **Lucario**, pokemon com alta força de
+ataque especial e **Hitmonchan**, com grande potência para defesa
+especial. Todos esses também contam com um poder ofensivo maior que 100.
+
+<img src="README_files/figure-gfm/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
